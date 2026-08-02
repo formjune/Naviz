@@ -89,7 +89,7 @@ class SplitByMaterials(bpy.types.Operator):
 class CreateUV(bpy.types.Operator):
     bl_idname = "object.naviz_create_uv"
     bl_label = "Create UV"
-    bl_description = "Create UV and set Texel Density to 10.24"
+    bl_description = "Create UV and set Texel Density to 1024"
     bl_options = {'REGISTER', 'UNDO'}
 
     def execute(self, context):
@@ -130,8 +130,11 @@ class CreateUV(bpy.types.Operator):
                 bpy.ops.uv.cube_project(cube_size=1.0,correct_aspect=True,clip_to_bounds=False,scale_to_bounds=False)
                 bpy.ops.object.mode_set(mode='OBJECT')
 
-                bpy.ops.object.texel_density_preset_set(td_value="10.24")
-                bpy.ops.object.texel_density_set()
+            bpy.context.scene.td.units = "1"
+            bpy.context.scene.td.texture_size = "2048"
+
+            bpy.ops.object.texel_density_preset_set(td_value="1024")
+            bpy.ops.object.texel_density_set()
         return {"FINISHED"}
 
 
