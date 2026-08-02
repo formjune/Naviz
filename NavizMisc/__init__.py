@@ -93,6 +93,10 @@ class CreateUV(bpy.types.Operator):
     bl_options = {'REGISTER', 'UNDO'}
 
     def execute(self, context):
+
+        bpy.context.scene.td.units = "1"
+        bpy.context.scene.td.texture_size = "2048"
+
         for mesh in context.selected_objects:
             for mat_index, mat_slot in enumerate(mesh.material_slots):
                 material = mat_slot.material
@@ -129,12 +133,8 @@ class CreateUV(bpy.types.Operator):
                 bpy.ops.object.mode_set(mode='EDIT')
                 bpy.ops.uv.cube_project(cube_size=1.0,correct_aspect=True,clip_to_bounds=False,scale_to_bounds=False)
                 bpy.ops.object.mode_set(mode='OBJECT')
-
-            bpy.context.scene.td.units = "1"
-            bpy.context.scene.td.texture_size = "2048"
-
-            bpy.ops.object.texel_density_preset_set(td_value="1024")
-            bpy.ops.object.texel_density_set()
+                bpy.ops.object.texel_density_preset_set(td_value="1024")
+                bpy.ops.object.texel_density_set()
         return {"FINISHED"}
 
 
