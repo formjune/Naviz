@@ -137,7 +137,7 @@ class GetPath(bpy.types.Operator):
     bl_options = {'REGISTER', 'UNDO'}
 
     def execute(self, context):
-        context.scene.naviz_property.texture_roof_folder = os.path.dirname(bpy.data.filepath)
+        context.scene.naviz_property.texture_root_folder = os.path.dirname(bpy.data.filepath)
         return {"FINISHED"}
 
 
@@ -148,7 +148,7 @@ class LoadObj(bpy.types.Operator):
     bl_options = {'REGISTER', 'UNDO'}
 
     def execute(self, context):
-        root_folder = context.scene.naviz_property.texture_roof_folder
+        root_folder = context.scene.naviz_property.texture_root_folder
         for folder, _, files in os.walk(root_folder):
             for file in files:
                 if not file.endswith(".obj"):
@@ -166,7 +166,7 @@ class ReloadTextures(bpy.types.Operator):
     bl_options = {'REGISTER', 'UNDO'}
 
     def execute(self, context):
-        root_folder = context.scene.naviz_property.texture_roof_folder
+        root_folder = context.scene.naviz_property.texture_root_folder
         suffix = context.scene.naviz_property.texture_resolution
         if suffix == "_":
             suffix = ""
