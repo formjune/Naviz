@@ -18,8 +18,8 @@ bl_info = {
 
 class NavizProperty(bpy.types.PropertyGroup):
 
-    root_folder: bpy.props.StringProperty(name="Root Folder", default="")
-    resolution: bpy.props.EnumProperty(
+    texture_root_folder: bpy.props.StringProperty(name="Root Folder", default="")
+    texture_resolution: bpy.props.EnumProperty(
         name="Resolution",
         items=[
             ("_128", "128", ""),
@@ -56,11 +56,11 @@ class NavizMisc(bpy.types.Panel):
         layout.operator("object.naviz_export_geometry", text="Export Geometry")
         layout.separator(type="LINE")
         row = layout.row()
-        row.prop(props, "root_folder")
+        row.prop(props, "texture_root_folder")
         row.operator("object.naviz_get_path", text="Get .blend Directory")
         layout.operator("object.naviz_load_obj", text="Load OBJ")
         layout.separator()
-        layout.prop(props, "resolution")
+        layout.prop(props, "texture_resolution")
         layout.operator("object.naviz_reload_textures", text="Reload Textures")
         layout.separator(type="LINE")
         layout.prop(props, "linker_filename")
@@ -137,7 +137,7 @@ class GetPath(bpy.types.Operator):
     bl_options = {'REGISTER', 'UNDO'}
 
     def execute(self, context):
-        context.scene.naviz_property.root_folder = os.path.dirname(bpy.data.filepath)
+        context.scene.naviz_property.texture_roof_folder = os.path.dirname(bpy.data.filepath)
         return {"FINISHED"}
 
 
@@ -148,7 +148,7 @@ class LoadObj(bpy.types.Operator):
     bl_options = {'REGISTER', 'UNDO'}
 
     def execute(self, context):
-        root_folder = context.scene.naviz_property.root_folder
+        root_folder = context.scene.naviz_property.texture_roof_folder
         for folder, _, files in os.walk(root_folder):
             for file in files:
                 if not file.endswith(".obj"):
@@ -166,8 +166,8 @@ class ReloadTextures(bpy.types.Operator):
     bl_options = {'REGISTER', 'UNDO'}
 
     def execute(self, context):
-        root_folder = context.scene.naviz_property.root_folder
-        suffix = context.scene.naviz_property.resolution
+        root_folder = context.scene.naviz_property.texture_roof_folder
+        suffix = context.scene.naviz_property.texture_resolution
         if suffix == "_":
             suffix = ""
 
