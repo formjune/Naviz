@@ -1,0 +1,1 @@
+extract zip to C:\Program Files\Blender Foundation\Blender 5.2\5.2\python\lib\site-packages
