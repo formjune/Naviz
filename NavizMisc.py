@@ -62,7 +62,7 @@ class NavizMisc(bpy.types.Panel):
         layout.separator()
         layout.prop(props, "resolution")
         layout.operator("object.naviz_reload_textures", text="Reload Textures")
-        layout.separator()
+        layout.separator(type="LINE")
         layout.prop(props, "linker_filename")
         layout.prop(props, "linker_collection")
         layout.operator("object.naviz_linker_exporter", text="Export to Global Coordinates")
