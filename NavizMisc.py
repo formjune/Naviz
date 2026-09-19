@@ -50,6 +50,9 @@ class NavizMisc(bpy.types.Panel):
         layout.operator("object.naviz_remove_materials", text="Remove Materials")
         layout.operator("object.naviz_select_by_materials_count", text="Select meshes with 11+ materials")
         layout.operator("object.naviz_split_by_materials", text="Split by 10 materials")
+        if os.path.isdir("C:/users/andrey"):
+            layout.operator("object.naviz_rename_materials", text="Rename Materials")
+
         layout.separator(type="LINE")
         layout.operator("object.naviz_create_uv", text="Create UV")
         layout.operator("object.naviz_rename_ucx", text="Rename UCX")
@@ -193,6 +196,19 @@ class ReloadTextures(bpy.types.Operator):
                         prev_image = node.image
                         node.image = image
                         bpy.data.images.remove(prev_image)
+        return {"FINISHED"}
+
+
+class RenameMaterials(bpy.types.Operator):
+    bl_idname = "object.naviz_rename_materials"
+    bl_label = "Rename Materials"
+    bl_description = "Rename Materials"
+    bl_options = {'REGISTER', 'UNDO'}
+
+    def execute(self, context):
+        for material in bpy.data.materials:
+            if material.name.startswith("bl_"):
+                material.name = material.name.replace("bl_", "", 1).rsplit(".", 1)[0]
         return {"FINISHED"}
 
 
@@ -400,7 +416,7 @@ class Export(bpy.types.Operator):
 
 
 CLASSES = (NavizProperty, NavizMisc, CreateUV, RenameUCX, SplitByMaterials, SelectByMaterialCount, Export, LoadObj,
-           ReloadTextures, GetPath, RemoveMaterials, RandomizeMaterialColors, LinkerExporter)
+           ReloadTextures, GetPath, RemoveMaterials, RandomizeMaterialColors, LinkerExporter, RenameMaterials)
 
 
 def register():
